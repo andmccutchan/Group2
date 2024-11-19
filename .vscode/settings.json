@@ -1,7 +1,8 @@
 {
     "files.associations": {
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "string": "cpp"
     },
-    "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "JetBrains Mono",
     "editor.fontSize": 14
 }

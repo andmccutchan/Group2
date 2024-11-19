@@ -1,5 +1,28 @@
 #include "HashMap.hpp"
 
+
+//================================================================================
+template <class K, class V>
+HashMap<K, V>::HashMap() {
+
+}
+
+template <class K, class V>
+HashMap<K, V>::HashMap(const HashMap<K, V>& other) {
+
+}
+
+template <class K, class V>
+HashMap<K, V>& HashMap<K, V>::operator=(const HashMap<K, V>& other) {
+
+}
+
+template <class K, class V>
+HashMap<K, V>::HashMap() {
+    
+}
+//================================================================================
+
 template <class K, class V>
 void HashMap<K, V>::insert(const K &key, const V &value) {
 
