@@ -6,7 +6,8 @@ class HashFunction {
     private:
         T key;
     public:
-        getHash(T key) {
+        T hash;
+        T getHash(T key) {
             
         }
 };
