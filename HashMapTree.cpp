@@ -4,7 +4,8 @@
 //================================================================================
 template <class K, class V>
 HashMapTree<K, V>::HashMapTree() {
-
+    capacity = 10;
+    size = 0;
 }
 
 template <class K, class V>
@@ -27,7 +28,7 @@ HashMapTree<K, V>::~HashMapTree() {
 
 template <class K, class V>
 void HashMapTree<K, V>::insert(const K &key, const V &value) {
-
+    int index = getHash(key);
 }
 
 template <class K, class V>
