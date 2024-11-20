@@ -14,8 +14,8 @@ private:
 
 public: 
                         HashMapTree();
-                        HashMapTree(const HashMap<K, V>& other);
-    HashMap<K, V>&      operator=(const HashMapTree<K, V>& other);
+                        HashMapTree(const HashMapTree<K, V>& other);
+    HashMapTree<K, V>&      operator=(const HashMapTree<K, V>& other);
                         ~HashMapTree();
     void                insert(const K &key, const V &value);
     void                remove(/*USE RBT*/);

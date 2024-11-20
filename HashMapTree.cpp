@@ -8,12 +8,12 @@ HashMapTree<K, V>::HashMapTree() {
 }
 
 template <class K, class V>
-HashMapTree<K, V>::HashMapTree(const HashMap<K, V>& other) {
+HashMapTree<K, V>::HashMapTree(const HashMapTree<K, V>& other) {
 
 }
 
 template <class K, class V>
-HashMap<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& other) {
+HashMapTree<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& other) {
 
 }
 
