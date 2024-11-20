@@ -18,7 +18,7 @@ HashMap<K, V>& HashMap<K, V>::operator=(const HashMap<K, V>& other) {
 }
 
 template <class K, class V>
-HashMap<K, V>::HashMap() {
+HashMap<K, V>::~HashMap() {
     
 }
 //================================================================================
