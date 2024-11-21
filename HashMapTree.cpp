@@ -28,12 +28,13 @@ HashMapTree<K, V>::~HashMapTree() {
 
 template <class K, class V>
 void HashMapTree<K, V>::insert(const K &key, const V &value) {
-    int index = getHash(key);
+    hash.getHash(key);
+    
 }
 
 template <class K, class V>
 void HashMapTree<K, V>::remove() {
-
+    
 }
 
 template <class K, class V>

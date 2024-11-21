@@ -7,14 +7,14 @@ using namespace std;
 template <typename T>
 class HashFunction {
     private:
-        int capacity;
+        int tableSize;
     public:
         HashFunction() {
-            capacity = 10;
+            tableSize = 10;
         }
 
         T getHash(const T& key) const {
-            return key % capacity;
+            return key % tableSize;
         }
 };
 
