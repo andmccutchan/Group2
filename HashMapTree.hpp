@@ -2,20 +2,19 @@
 #define HASH_MAP_TREE_HPP
 
 #include <iostream>
+#include <RBTree.hpp>
 using namespace std;
 
 template<typename K, typename V>
 class HashMapTree {
 private:
-    K key;
-    V value;
+    vector<RBTree<K, V> hashKeys;
     int capacity;
     int size;
-
 public: 
                         HashMapTree();
-                        HashMapTree(const HashMap<K, V>& other);
-    HashMap<K, V>&      operator=(const HashMapTree<K, V>& other);
+                        HashMapTree(const HashMapTree<K, V>& other);
+    HashMapTree<K, V>&      operator=(const HashMapTree<K, V>& other);
                         ~HashMapTree();
     void                insert(const K &key, const V &value);
     void                remove(/*USE RBT*/);

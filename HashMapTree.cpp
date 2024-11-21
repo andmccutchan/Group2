@@ -4,16 +4,17 @@
 //================================================================================
 template <class K, class V>
 HashMapTree<K, V>::HashMapTree() {
+    capacity = 10;
+    size = 0;
+}
+
+template <class K, class V>
+HashMapTree<K, V>::HashMapTree(const HashMapTree<K, V>& other) {
 
 }
 
 template <class K, class V>
-HashMapTree<K, V>::HashMapTree(const HashMap<K, V>& other) {
-
-}
-
-template <class K, class V>
-HashMap<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& other) {
+HashMapTree<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& other) {
 
 }
 
@@ -27,7 +28,7 @@ HashMapTree<K, V>::~HashMapTree() {
 
 template <class K, class V>
 void HashMapTree<K, V>::insert(const K &key, const V &value) {
-
+    int index = getHash(key);
 }
 
 template <class K, class V>
