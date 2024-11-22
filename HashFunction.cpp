@@ -1,8 +1,14 @@
-#include <iostream>
 #include "HashFunction.hpp"
-using namespace std;
 
-template <typename T>
-T HashFunction<T>::getHash(T key){
-    // some hashfunction
+template <class T>
+HashFunction<T>::HashFunction() {
+    capacity = 10;
 }
+
+template <class T>
+T HashFunction<T>::getHash(const T& key) const {
+    return key % capacity;
+}
+
+template class HashFunction<int>;
+

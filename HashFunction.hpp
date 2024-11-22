@@ -9,13 +9,8 @@ class HashFunction {
     private:
         int capacity;
     public:
-        HashFunction() {
-            capacity = 10;
-        }
-
-        T getHash(const T& key) const {
-            return key % capacity;
-        }
+        HashFunction();
+        T getHash(const T& key) const;
 };
 
 #endif

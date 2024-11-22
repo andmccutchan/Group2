@@ -537,3 +537,5 @@ void RBTree<T>::deleteSubTree(RBTreeNode<T>* node){
 
     delete node;
 }
+
+template class RBTree<pair<int, int> >;
