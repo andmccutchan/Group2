@@ -17,8 +17,8 @@ using namespace std;
 template <class T>
 class RBTree {
 private:
-    RBTreeNode<T>* root;
     long nodeCount;
+    RBTreeNode<T>* root;
 
     void deleteSubTree(RBTreeNode<T>* node);                //helper function to delete nodes
     RBTreeNode<T>* copySubTree(const RBTreeNode<T>* node);  //helper function for copying nodes of a tree

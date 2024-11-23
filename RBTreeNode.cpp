@@ -143,7 +143,7 @@ void RBTreeNode<T>::printInOrderTraversal() const {
     if (left != nullptr){
        left -> printInOrderTraversal();
     }
-    cout << "(" << data.first << ", " << data.second << ")" <<  " ";
+    cout << "-> (" << data.first << ", " << data.second << ")" <<  " ";
     if (right != nullptr){
         right -> printInOrderTraversal();
     }

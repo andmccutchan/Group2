@@ -407,10 +407,10 @@ template <typename T>
 RBTreeNode<T>* RBTree<T>::search(T value) const{
     RBTreeNode<T>* current = root;
     while (current != nullptr) {
-        if (current->data == value) {
+        if (current->data.first == value.first) {
             return current;
         }
-        else if (value < current->data) {
+        else if (value.first < current->data.first) {
             current = current->left;
         }
         else {

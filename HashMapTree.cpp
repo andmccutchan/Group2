@@ -49,15 +49,19 @@ void HashMapTree<K, V>::insert(const K &key, const V &value) {
     int index = hash.getHash(key);
     RBTree<pair<K, V> >& tree = table[index];
 
-    RBTreeNode<pair<K, V> >* node = tree.search(make_pair(key, V()));
+    RBTreeNode<pair<K, V> >* node = tree.search(make_pair(key, value));
 
-    if (node != nullptr) {
+    if (node) {
         node->data.second = value;
+        // cout << "Updated node with existing key: " << "(" << node->data.first << ", " << node->data.second << ")" << endl;
     }
     else {
-        tree.insert(make_pair(key, value));
+        pair<K, V> newNode = make_pair(key, value);
+        tree.insert(newNode);
         tableElements++;
+        // cout << "Inserted new node: " << "(" << newNode.first << ", " << newNode.second << ")" << endl;
     }
+
 }
 
 template <class K, class V>
@@ -78,7 +82,7 @@ V& HashMapTree<K, V>::operator[](const K &key) {
     RBTree<pair<K, V> >& tree = table[index];
     RBTreeNode<pair<K, V> >* node = tree.search(make_pair(key, V()));
     
-    if (node != nullptr) {
+    if (node) {
         return node->data.second;
     }
     else {
@@ -97,6 +101,20 @@ pair<K,V>* HashMapTree<K, V>::search(const K &key) {
     }
 
     return nullptr;
+}
+
+template <class K, class V>
+void HashMapTree<K, V>::printMap() {
+    for (int i = 0; i < tableSize; i++) {  
+        if (table[i].isEmpty()) {
+            cout << i << ": -> Null" << endl;
+        }
+        else {
+            cout << i << ": ";
+            table[i].printInOrderTraversal();
+            cout << endl;
+        }
+    }
 }
 
 template class HashMapTree<int, int>;
