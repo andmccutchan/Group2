@@ -1,8 +1,6 @@
-#include <iostream>
 #include "HashFunction.hpp"
-using namespace std;
 
-template <typename T>
-T HashFunction<T>::getHash(T key){
-    // some hashfunction
-}
+// Explicit instantiation for specific types
+template class HashFunction<int>;
+template class HashFunction<float>;
+template class HashFunction<double>;
