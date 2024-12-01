@@ -1,3 +1,10 @@
+//==============================================================
+// Names: Huy Phan, Namu Kim, Andrew Mccutchan
+// Class: CS 271
+// Project: 3
+// Date: Nov 2024
+// About: This file is the header file for the hash function
+//==============================================================
 #ifndef HASH_FUNCTION_HPP
 #define HASH_FUNCTION_HPP
 
