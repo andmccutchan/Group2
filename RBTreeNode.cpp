@@ -108,6 +108,11 @@ RBTreeNode<T>* RBTreeNode<T>::treeMax() {
     return track;
 }
 
+ostream & operator<< (ostream &os, pair<int, int> &list) {
+    os << list.first << " " << list.second;
+    return os;
+}
+
 //================================================
 // PRINTPREORDERTRAVERSAL
 // PARAMETERS: None
@@ -117,7 +122,7 @@ RBTreeNode<T>* RBTreeNode<T>::treeMax() {
 //================================================
 template <typename T>
 void RBTreeNode<T>::printPreOrderTraversal() const {
-    cout << data << " ";
+    cout << "(" << data.first << ", " << data.second << ")" <<  " ";
     if (left != nullptr) {
         left -> printPreOrderTraversal();
     }
@@ -138,7 +143,7 @@ void RBTreeNode<T>::printInOrderTraversal() const {
     if (left != nullptr){
        left -> printInOrderTraversal();
     }
-    cout << data << " ";
+    cout << "-> (" << data.first << ", " << data.second << ")" <<  " ";
     if (right != nullptr){
         right -> printInOrderTraversal();
     }
@@ -159,5 +164,10 @@ void RBTreeNode<T>::printPostOrderTraversal() const {
     if (right != nullptr){
         right -> printPostOrderTraversal();
     }
-    cout << data << " ";
+    cout << "(" << data.first << ", " << data.second << ")" <<  " ";
 }
+
+
+
+
+template class RBTreeNode<pair<int, int> >;
