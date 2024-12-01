@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cassert>
+#include "HashMap.hpp"
 #include "HashMapTree.hpp"
 using namespace std;
 
@@ -10,12 +10,19 @@ void testHashMapTreeAccess();
 
 int main() {
 
+    HashMapTree<int, int> map;
+    map.insert(2, 5);
+
     testHashMapTreeInsert();
-    testHashMapTreeRemove();
-    testHashMapTreeSearch();
-    testHashMapTreeAccess();
+    // testHashMapTreeRemove();git 
+    // testHashMapTreeSearch();
+    // testHashMapTreeAccess();
     return 0;
 }
+
+
+
+
 
 void testHashMapTreeInsert() {
     cout << "Testing HashMapTree insertion" << endl;

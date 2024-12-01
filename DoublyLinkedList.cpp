@@ -382,3 +382,5 @@ template <class T>
 	}
 	return newlist;
 }
+
+template class DoublyLinkedList<pair<int, int> >;

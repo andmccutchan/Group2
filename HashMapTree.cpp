@@ -56,8 +56,7 @@ void HashMapTree<K, V>::insert(const K &key, const V &value) {
         // cout << "Updated node with existing key: " << "(" << node->data.first << ", " << node->data.second << ")" << endl;
     }
     else {
-        pair<K, V> newNode = make_pair(key, value);
-        tree.insert(newNode);
+        tree.insert(make_pair(key, value));
         tableElements++;
         // cout << "Inserted new node: " << "(" << newNode.first << ", " << newNode.second << ")" << endl;
     }
