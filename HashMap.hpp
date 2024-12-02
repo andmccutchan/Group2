@@ -24,9 +24,8 @@ private:
     int capacity;
     int size;
     DoublyLinkedList<std::pair<K, V>>* buckets;
-    HashFunction<K> hashFunction;
-
 public: 
+    HashFunction<K> hashFunction;
                         HashMap();
                         HashMap(const HashMap<K, V>& other);
     HashMap<K, V>&      operator=(const HashMap<K, V>& other);
