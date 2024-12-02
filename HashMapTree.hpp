@@ -1,3 +1,14 @@
+//==============================================================
+// Names: Huy Phan, Namu Kim, Andrew Mccutchan
+// Class: CS 271
+// Project: 3
+// Date: Nov 2024
+// About: This file is the Header file of the Hash map tree class. It includes
+// declarations for declaring a hashmap, copy constructor,
+// destructors, assignment operator, insert, remove operator, and 
+// and search operator
+//==============================================================
+
 #ifndef HASH_MAP_TREE_HPP
 #define HASH_MAP_TREE_HPP
 
