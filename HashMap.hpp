@@ -35,7 +35,7 @@ public:
     void                print() const;
     V&                  operator[](const K &key);
     pair<K,V>*          search(const K &key);
-    int                getSize(){
+    int                 getSize(){
         return size;
     }
     int                getCapacity(){

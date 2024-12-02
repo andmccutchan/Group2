@@ -34,5 +34,12 @@ public:
     }
 };
 
+class key_exception : public exception {
+    public:
+    const char* what() const noexcept override {
+        return "Key not in hash set";
+    }
+};
+
 
 #endif 

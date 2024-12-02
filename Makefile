@@ -1,9 +1,9 @@
-mytests: mytests.o HashMap.o HashMapTree.o RBTree.o RBTreeNode.o HashFunction.o
-	g++ -std=c++17 -o mytests mytests.o HashMap.o HashMapTree.o RBTree.o RBTreeNode.o HashFunction.o
+mytests: mytests.o HashMap.o HashMapTree.o RBTree.o RBTreeNode.o HashFunction.o Set.o
+	g++ -std=c++17 -o mytests mytests.o HashMap.o HashMapTree.o RBTree.o RBTreeNode.o HashFunction.o Set.o
 	./mytests
 
 # Rule for building mytests.o
-mytests.o: mytests.cpp HashMap.hpp HashMapTree.hpp RBTree.hpp RBTreeNode.hpp HashFunction.hpp
+mytests.o: mytests.cpp HashMap.hpp HashMapTree.hpp RBTree.hpp RBTreeNode.hpp HashFunction.hpp Set.hpp
 	g++ -std=c++17 -c mytests.cpp -o mytests.o
 
 # Rule for building HashMap.o
@@ -25,6 +25,9 @@ RBTreeNode.o: RBTreeNode.cpp RBTreeNode.hpp
 # Rule for building HashFunction.o
 HashFunction.o: HashFunction.cpp HashFunction.hpp
 	g++ -std=c++17 -c HashFunction.cpp -o HashFunction.o
+
+Set.o: Set.cpp Set.hpp
+	g++ -std=c++17 -c Set.cpp -o Set.o
 
 # Cleaning all object files and executable
 clean:
