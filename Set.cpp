@@ -1,6 +1,6 @@
 #include<iostream>
 #include "Set.hpp"
-#include <random> // for testing
+// #include <random>
 
 template <typename T>
 Set<T>::Set(){
@@ -101,68 +101,68 @@ bool Set<T>::search(const T& value){
 }
 
 
-main(){
+// main(){
 
-    Set<int> hset;
-    // hset.insert(1);
-    // hset.insert(3);
-    // hset.insert(5);
-    // hset.insert(13);
-    // hset.insert(11);
-    // hset.insert(1);
-    // hset.insert(53);
-    // hset.print();
-    // hset.remove(11);
-    // hset.print();
-    // hset.remove(33);
-    // hset.print();
-    // hset.remove(5);
+//     Set<int> hset;
+//     // hset.insert(1);
+//     // hset.insert(3);
+//     // hset.insert(5);
+//     // hset.insert(13);
+//     // hset.insert(11);
+//     // hset.insert(1);
+//     // hset.insert(53);
+//     // hset.print();
+//     // hset.remove(11);
+//     // hset.print();
+//     // hset.remove(33);
+//     // hset.print();
+//     // hset.remove(5);
 
-    random_device rd;  // Non-deterministic random number generator
-    mt19937 gen(rd()); // Mersenne Twister engine
-    uniform_int_distribution<int> dist(1, 10); // Distribution for numbers between 1 and 100 (adjust as needed)
+//     random_device rd;  // Non-deterministic random number generator
+//     mt19937 gen(rd()); // Mersenne Twister engine
+//     uniform_int_distribution<int> dist(1, 10); // Distribution for numbers between 1 and 100 (adjust as needed)
 
-    int n = 100;
-    int m = 0;
-    vector<int> randomNumbers(n);
-    // vector<int> wrongNumbers(n);
-    for (int i = 0; i < n; ++i) {
-        randomNumbers[i] = dist(gen);
-        hset.insert(randomNumbers[i]);
-    }
+//     int n = 100;
+//     int m = 0;
+//     vector<int> randomNumbers(n);
+//     // vector<int> wrongNumbers(n);
+//     for (int i = 0; i < n; ++i) {
+//         randomNumbers[i] = dist(gen);
+//         hset.insert(randomNumbers[i]);
+//     }
 
-    hset.print();
+//     hset.print();
 
-    for (int i = 0; i < n; i++){
-        //n = dist(gen);
-        //wrongNumbers[i] = randomNumbers[i]*-1;
-        m = randomNumbers[i];
-        // cout << "Searching for " << m << "... ";
-        if(hset.search(m)){
-            // cout << "FOUND" << endl;
-        }
-        else{
-            cout << "NOT_FOUND" << endl;
-        }
-    }
+//     for (int i = 0; i < n; i++){
+//         //n = dist(gen);
+//         //wrongNumbers[i] = randomNumbers[i]*-1;
+//         m = randomNumbers[i];
+//         // cout << "Searching for " << m << "... ";
+//         if(hset.search(m)){
+//             // cout << "FOUND" << endl;
+//         }
+//         else{
+//             cout << "NOT_FOUND" << endl;
+//         }
+//     }
 
-    for (int i = 0; i < n; ++i) {;
-        hset.remove(randomNumbers[i]);
-    }
+//     for (int i = 0; i < n; ++i) {;
+//         hset.remove(randomNumbers[i]);
+//     }
 
-    hset.print();
+//     hset.print();
 
-// Testing non found values
-        for (int i = 0; i < n; i++){
-        //n = dist(gen);
-        m = randomNumbers[i];
-        // cout << "Searching for " << m << "... ";
-        if(hset.search(m)){
-            cout << "FOUND" << endl;
-        }
-        else{
-            // cout << "NOT_FOUND" << endl;
-        }
-    }
+// // Testing non found values
+//         for (int i = 0; i < n; i++){
+//         //n = dist(gen);
+//         m = randomNumbers[i];
+//         // cout << "Searching for " << m << "... ";
+//         if(hset.search(m)){
+//             cout << "FOUND" << endl;
+//         }
+//         else{
+//             // cout << "NOT_FOUND" << endl;
+//         }
+//     }
 
-}
+// }

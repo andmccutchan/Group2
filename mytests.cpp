@@ -3,6 +3,7 @@
 #include "HashMapTree.hpp"
 #include "HashMap.cpp"
 #include "DoublyLinkedList.cpp"
+#include "Set.cpp"
 using namespace std;
 
 int testsPassed = 0;
@@ -225,6 +226,58 @@ void hashMap_testOperatorAccess() {
 //     cout << endl;
 // }
 
+void hashset_testInsert() {
+    cout << "\nTesting Hash Set insert" << endl;
+    Set<int> hset;
+    hset.insert(3);
+    hset.insert(10);
+    hset.insert(3);
+    hset.insert(13);
+    hset.insert(25);
+    hset.print();
+
+    assertTest(hset.HSet[3][0] == 3, "insert value 3");
+    assertTest(hset.HSet[3][1] == 13, "insert resulting in set with chaining");
+    assertTest(hset.HSet[1].empty(), "empty set for non inserted value");
+    assertTest(hset.HSet[5][0] == 25, "insert value 25");
+}
+
+void hashset_testRemove() {
+    cout << "\nTesting Hash Set remove" << endl;
+    Set<int> hset;
+    hset.insert(4);
+    hset.insert(14);
+    hset.insert(34);
+    hset.insert(56);
+    hset.insert(25);
+
+    hset.remove(14);
+    hset.remove(56);
+    hset.remove(4);
+    hset.print();
+    assertTest(hset.HSet[4][1] == 34, "Remove 14 test");
+    assertTest(hset.HSet[6].empty(), "Remove 56 test");
+    assertTest(hset.HSet[4][0] == 34, "Remove 4 test");
+}
+
+void hashset_testSearch() {
+    cout << "\nTesting Hash Set search" << endl;
+    Set<int> hset;
+    hset.insert(3);
+    hset.insert(10);
+    hset.insert(3);
+    hset.insert(13);
+    hset.insert(25);
+    hset.print();
+
+    assertTest(hset.search(13), "search for 13");
+    assertTest(hset.search(3), "search for 3");
+    assertTest(!hset.search(4), "search for 4");
+}
+
+
+
+
 int main() {
     hashMap_testDefaultConstructor();
     hashMap_testCopyConstructor();
@@ -233,11 +286,18 @@ int main() {
     hashMap_testRemove();
     hashMap_testSearch();
     hashMap_testOperatorAccess();
+
+    hashset_testInsert();
+    hashset_testRemove();
+    hashset_testSearch();
+
     printTestSummary();
 
     // testHashMapTreeInsert();
     // testHashMapTreeRemove();
     // testHashMapTreeSearch();
     // testHashMapTreeAccess();
+
+    
     return 0;
 }
