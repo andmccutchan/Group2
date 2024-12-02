@@ -219,3 +219,21 @@ void HashMap<K, V>::print() const {
         cout << endl;
     }
 }
+
+template <class K, class V>
+HashMap<K, V>::HashMap(int capacity) : hashFunction(capacity) {
+    this->capacity = capacity;
+    size = 0;
+    buckets = new DoublyLinkedList<pair<K, V>>[capacity];
+}
+
+template <class K, class V>
+vector<int> HashMap<K, V>::count_elements_per_slot() const {
+    vector<int> slotCounts(capacity, 0);
+    for (int i = 0; i < capacity; ++i) {
+        slotCounts[i] = buckets[i].length();
+    }
+    return slotCounts;
+}
+
+template class HashMap<int, int>;

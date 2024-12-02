@@ -1,112 +1,145 @@
 #include <iostream>
 #include <vector>
-#include <string>
-#include <random>
-#include <map>
 #include <chrono>
+#include <random>
+#include <fstream>
 #include "HashMap.cpp"
 #include "DoublyLinkedList.cpp"
 
 using namespace std;
 
-//=========================================================
-// Function to generate a random data set of key-value pairs
-//=========================================================
-vector<pair<int, string>> generateDataSet(size_t n) {
-    vector<pair<int, string>> dataSet;
+// Function to generate random integers
+int* generateRandomArray(long size, int min, int max) {
+    int* array = new int[size];
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<int> keyDist(1, n * 10);
-    uniform_int_distribution<int> charDist(0, 25);
+    uniform_int_distribution<> dist(min, max);
 
-    for (size_t i = 0; i < n; ++i) {
-        string value(5, 'a');
-        for (auto& c : value) {
-            c = 'a' + charDist(gen);
+    for (long i = 0; i < size; ++i) {
+        array[i] = dist(gen);
+    }
+
+    return array;
+}
+
+// Measure HashMap operations
+void measure_hashmap_operations(const vector<long>& sizes, int min_val, int max_val, const string& output_file) {
+    vector<tuple<long, double, double, double>> results;
+
+    for (long size : sizes) {
+        cout << "Processing size: " << size << endl;
+
+        int* data = generateRandomArray(size, min_val, max_val);
+
+        // Calculate capacity as size / 10
+        int capacity = size / 10;
+        if (capacity == 0) capacity = 1; // Ensure capacity is at least 1
+
+        // Create a HashMap with dynamic capacity
+        HashMap<int, int> hashMap(capacity);
+
+        // Measure insertion time
+        cout << "Inserting..." << endl;
+        auto start_insert = chrono::high_resolution_clock::now();
+        for (long i = 0; i < size; ++i) {
+            hashMap.insert(data[i], i);
         }
-        dataSet.emplace_back(keyDist(gen), value);
-    }
-    return dataSet;
-}
+        auto end_insert = chrono::high_resolution_clock::now();
+        chrono::duration<double> insert_duration = end_insert - start_insert;
+        cout << "Insertion time: " << insert_duration.count() << " seconds." << endl;
 
-//=========================================================
-// Measures insertion performance
-//=========================================================
-template <typename HashMap>
-double measureInsertion(HashMap& map, const vector<pair<int, string>>& dataSet) {
-    auto start = chrono::high_resolution_clock::now();
-    for (const auto& pair : dataSet) {
-        map.insert(pair.first, pair.second);
-    }
-    auto end = chrono::high_resolution_clock::now();
-    return chrono::duration<double, milli>(end - start).count();
-}
+        // Measure deletion time
+        cout << "Deleting..." << endl;
+        long deletions = size / 10;
+        mt19937 gen(random_device{}());
+        uniform_real_distribution<> probability(0.0, 1.0);
+        uniform_int_distribution<> index_dist(0, size - 1);
 
-//=========================================================
-// Measures deletion performance
-//=========================================================
-template <typename HashMap>
-double measureDeletion(HashMap& map, const vector<pair<int, string>>& dataSet, size_t n) {
-    size_t numDeletions = n / 10;
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> probDist(0.0, 1.0);
-
-    auto start = chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < numDeletions; ++i) {
-        if (probDist(gen) < 0.5) { // Delete with 50% probability
-            int keyToDelete = dataSet[i % n].first;
-            pair<int, string> toDelete(keyToDelete, "");
-            try {
-                map.remove(&toDelete);
-            } catch (const exception& e) {
-                // Handle errors silently for non-existent keys
+        auto start_delete = chrono::high_resolution_clock::now();
+        for (long i = 0; i < size && deletions > 0; ++i) {
+            if (probability(gen) < 0.5) {
+                int key_to_remove = data[index_dist(gen)];
+                pair<int, int>* element_to_remove = hashMap.search(key_to_remove);
+                if (element_to_remove != nullptr) {
+                    hashMap.remove(element_to_remove);
+                    --deletions;
+                }
             }
         }
+        auto end_delete = chrono::high_resolution_clock::now();
+        chrono::duration<double> delete_duration = end_delete - start_delete;
+        cout << "Deletion time: " << delete_duration.count() << " seconds." << endl;
+
+        // Measure search time
+        cout << "Searching..." << endl;
+        auto start_search = chrono::high_resolution_clock::now();
+        for (long i = 0; i < size; ++i) {
+            hashMap.search(data[index_dist(gen)]);
+        }
+        auto end_search = chrono::high_resolution_clock::now();
+        chrono::duration<double> search_duration = end_search - start_search;
+        cout << "Search time: " << search_duration.count() << " seconds." << endl;
+
+        results.emplace_back(size, insert_duration.count(), delete_duration.count(), search_duration.count());
+        delete[] data;
     }
-    auto end = chrono::high_resolution_clock::now();
-    return chrono::duration<double, milli>(end - start).count();
+
+    // Save results to a CSV file
+    ofstream file(output_file);
+    file << "Size,Insert Time (s),Delete Time (s),Search Time (s)\n";
+    for (const auto& [size, insert_time, delete_time, search_time] : results) {
+        file << size << "," << insert_time << "," << delete_time << "," << search_time << "\n";
+    }
+    file.close();
+    cout << "Results saved to " << output_file << endl;
 }
 
-//=========================================================
-// Measures search performance
-//=========================================================
-template <typename HashMap>
-double measureSearch(HashMap& map, const vector<pair<int, string>>& dataSet, size_t n) {
-    size_t numSearches = n / 10;
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> keyDist(1, n * 10);
 
-    auto start = chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < numSearches; ++i) {
-        int keyToSearch = keyDist(gen);
-        map.search(keyToSearch);
+// Analyze HashMap slot distribution
+void analyze_hashmap_distribution(const vector<long>& sizes, int min_val, int max_val, const string& slot_output_file) {
+    ofstream file(slot_output_file);
+    file << "Size,Slot,Count\n";
+
+    for (long size : sizes) {
+        cout << "Analyzing distribution for size: " << size << endl;
+
+        int* data = generateRandomArray(size, min_val, max_val);
+
+        // Calculate capacity dynamically as size / 10
+        int capacity = size / 10;
+        // Create a HashMap with calculated capacity
+        HashMap<int, int> hashMap(capacity);
+
+        // Insert elements into the hash map
+        for (long i = 0; i < size; ++i) {
+            hashMap.insert(data[i], i);
+        }
+
+        // Get slot distribution
+        vector<int> slot_counts = hashMap.count_elements_per_slot();
+
+        // Write slot counts to file
+        for (size_t i = 0; i < slot_counts.size(); ++i) {
+            file << size << "," << i << "," << slot_counts[i] << "\n";
+        }
+
+        delete[] data;
     }
-    auto end = chrono::high_resolution_clock::now();
-    return chrono::duration<double, milli>(end - start).count();
+
+    file.close();
+    cout << "Slot distribution results saved to " << slot_output_file << endl;
 }
 
-//=========================================================
-// Main function to measure insertion, deletion, and search
-//=========================================================
+// Main function
 int main() {
-    vector<size_t> dataSizes = {100, 1000, 10000, 100000};
-    cout << "Performance of HashMap Operations:\n";
-    cout << "-----------------------------------\n";
-    cout << "Size\tInsertion(ms)\tDeletion(ms)\tSearch(ms)\n";
+    vector<long> sizes = {100, 1000, 10000, 100000, 1000000};
+    int min_val = 1, max_val = 1000000;
 
-    for (size_t n : dataSizes) {
-        auto dataSet = generateDataSet(n);
+    string output_file = "hashmap_performance.csv";
+    string slot_output_file = "hashmap_slot_distribution.csv";
 
-        HashMap<int, string> map;
-        double insertionTime = measureInsertion(map, dataSet);
-        double deletionTime = measureDeletion(map, dataSet, n);
-        double searchTime = measureSearch(map, dataSet, n);
-
-        cout << n << "\t" << insertionTime << "\t\t" << deletionTime << "\t\t" << searchTime << "\n";
-    }
+    measure_hashmap_operations(sizes, min_val, max_val, output_file);
+    analyze_hashmap_distribution(sizes, min_val, max_val, slot_output_file);
 
     return 0;
 }
-//g++ -std=c++20 -o performance performance.cpp HashMap.cpp
