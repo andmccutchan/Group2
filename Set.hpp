@@ -1,3 +1,14 @@
+//==============================================================
+// Names: Huy Phan, Namu Kim, Andrew Mccutchan
+// Class: CS 271
+// Project: 3
+// Date: Nov 2024
+// About: This file is the Header file of the Set class. Set is
+// implemented by utilzing 2D vectors. It includes declarations
+// for declaring a hash table by implementing a set class,
+// copy constructor, destructors, insert, remove, search, and print
+// methods. 
+//==============================================================
 #ifndef SET_HPP
 #define SET_HPP
 
