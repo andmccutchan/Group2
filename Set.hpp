@@ -4,6 +4,7 @@
 #include <iostream>
 #include <functional>
 #include "HashFunction.hpp"
+#include "customexceptions.hpp"
 using namespace std;
 
 template <typename T>
