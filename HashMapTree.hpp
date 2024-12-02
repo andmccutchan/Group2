@@ -23,7 +23,9 @@ public:
     V&                      operator[](const K &key);
     pair<K,V>*              search(const K &key);
     void                    printMap(); // function to print out hash map
-
+    int                     getSize() {
+        return tableElements;
+    }
 
 };
 

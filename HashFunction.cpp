@@ -1,14 +1,6 @@
 #include "HashFunction.hpp"
 
-template <class T>
-HashFunction<T>::HashFunction() {
-    capacity = 10;
-}
-
-template <class T>
-T HashFunction<T>::getHash(const T& key) const {
-    return key % capacity;
-}
-
+// Explicit instantiation for specific types
 template class HashFunction<int>;
-
+template class HashFunction<float>;
+template class HashFunction<double>;
