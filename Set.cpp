@@ -27,6 +27,13 @@ Set<T>::Set(){
     HSet.resize(HSetSize);
 }
 
+template <typename T>
+Set<T>::Set(int capacity) : hash(capacity) {
+    this->HSetSize = capacity;
+    HSetSize = hash.getCapacity();
+    HSet.resize(HSetSize);
+}
+
 //==============================================================
 // Copy Constructor
 // Creates a deep copy of a Set object.
@@ -98,13 +105,13 @@ void Set<T>::insert(const T& value){
     else{ //if collision occurs
         for (auto i = chain.begin(); i != chain.end(); i++){
             if(*i == value){ // value already exists as first element
-                cout << value << " is already in hash set" << endl;
+                // cout << value << " is already in hash set" << endl;
                 break;
             }
             else{ // not duplicate of first element, check the rest.
                 i++;
                 if(*i == value){ // checking the next element of subset (if it exists)
-                    cout << value << " is already in hash set" << endl;;
+                    // cout << value << " is already in hash set" << endl;;
                     break;
                 }
                 else{ // empty slot, insert value
@@ -176,6 +183,15 @@ bool Set<T>::search(const T& value){
     return false;
 }
 
+// For Analysis
+template <class K>
+vector<int> Set<K>::count_elements_per_slot() const {
+    vector<int> slotCounts(HSetSize, 0);
+    for (int i = 0; i < HSetSize; ++i) {
+        slotCounts[i] = HSet[i].size(); // use chain
+    }
+    return slotCounts;
+}
 
 // main(){
 

@@ -27,21 +27,20 @@ void measure_hashmap_operations(const vector<long>& sizes, int min_val, int max_
 
     for (long size : sizes) {
         cout << "Processing size: " << size << endl;
-
         int* data = generateRandomArray(size, min_val, max_val);
 
         // Calculate capacity as size / 10
         int capacity = size / 10;
         if (capacity == 0) capacity = 1; // Ensure capacity is at least 1
 
-        // Create a HashMap with dynamic capacity
-        HashMap<int, int> hashMap(capacity);
+        //Create HashMap;
+        Set<int> hset(capacity);
 
         // Measure insertion time
         cout << "Inserting..." << endl;
         auto start_insert = chrono::high_resolution_clock::now();
         for (long i = 0; i < size; ++i) {
-            hashMap.insert(data[i], i);
+            hset.insert(data[i]);
         }
         auto end_insert = chrono::high_resolution_clock::now();
         chrono::duration<double> insert_duration = end_insert - start_insert;
@@ -58,9 +57,8 @@ void measure_hashmap_operations(const vector<long>& sizes, int min_val, int max_
         for (long i = 0; i < size && deletions > 0; ++i) {
             if (probability(gen) < 0.5) {
                 int key_to_remove = data[index_dist(gen)];
-                pair<int, int>* element_to_remove = hashMap.search(key_to_remove);
-                if (element_to_remove != nullptr) {
-                    hashMap.remove(element_to_remove);
+                if (hset.search(key_to_remove)) {
+                    hset.remove(key_to_remove);
                     --deletions;
                 }
             }
@@ -73,7 +71,7 @@ void measure_hashmap_operations(const vector<long>& sizes, int min_val, int max_
         cout << "Searching..." << endl;
         auto start_search = chrono::high_resolution_clock::now();
         for (long i = 0; i < size; ++i) {
-            hashMap.search(data[index_dist(gen)]);
+            hset.search(data[index_dist(gen)]);
         }
         auto end_search = chrono::high_resolution_clock::now();
         chrono::duration<double> search_duration = end_search - start_search;
@@ -83,7 +81,7 @@ void measure_hashmap_operations(const vector<long>& sizes, int min_val, int max_
         delete[] data;
     }
 
-    // Save results to a CSV file
+     // Save results to a CSV file
     ofstream file(output_file);
     file << "Size,Insert Time (s),Delete Time (s),Search Time (s)\n";
     for (const auto& [size, insert_time, delete_time, search_time] : results) {
@@ -92,7 +90,6 @@ void measure_hashmap_operations(const vector<long>& sizes, int min_val, int max_
     file.close();
     cout << "Results saved to " << output_file << endl;
 }
-
 
 // Analyze HashMap slot distribution
 void analyze_hashmap_distribution(const vector<long>& sizes, int min_val, int max_val, const string& slot_output_file) {
@@ -107,15 +104,15 @@ void analyze_hashmap_distribution(const vector<long>& sizes, int min_val, int ma
         // Calculate capacity dynamically as size / 10
         int capacity = size / 10;
         // Create a HashMap with calculated capacity
-        HashMap<int, int> hashMap(capacity);
+        Set<int> hset(capacity);
 
         // Insert elements into the hash map
         for (long i = 0; i < size; ++i) {
-            hashMap.insert(data[i], i);
+            hset.insert(data[i]);
         }
 
         // Get slot distribution
-        vector<int> slot_counts = hashMap.count_elements_per_slot();
+        vector<int> slot_counts = hset.count_elements_per_slot();
 
         // Write slot counts to file
         for (size_t i = 0; i < slot_counts.size(); ++i) {
@@ -124,18 +121,19 @@ void analyze_hashmap_distribution(const vector<long>& sizes, int min_val, int ma
 
         delete[] data;
     }
-
     file.close();
     cout << "Slot distribution results saved to " << slot_output_file << endl;
 }
+
+
 
 // Main function
 int main() {
     vector<long> sizes = {100, 1000, 10000, 100000, 1000000};
     int min_val = 1, max_val = 1000000;
 
-    string output_file = "hashmap_performance.csv";
-    string slot_output_file = "hashmap_slot_distribution.csv";
+    string output_file = "hashset_performance.csv";
+    string slot_output_file = "hashset_slot_distribution.csv";
 
     measure_hashmap_operations(sizes, min_val, max_val, output_file);
     analyze_hashmap_distribution(sizes, min_val, max_val, slot_output_file);

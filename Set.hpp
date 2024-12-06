@@ -26,12 +26,15 @@ class Set {
     public:
         vector<vector<T>> HSet;
         Set();
+        Set(int capacity);
         Set(const Set<T>& other);
         ~Set();
         void insert(const T &value);
         void remove(const T &value);
         bool search(const T &value);
         void print() const;
+
+        vector<int> count_elements_per_slot() const;
 };
 
 #endif
